@@ -1,133 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculation-Tools - Hub de Calculadoras Gratuitas</title>
-    <!-- Ícones (FontAwesome para os ícones dos cards) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculation Tools | Ferramentas Online</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    main.container {
+      flex: 1;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      font-size: 2.25rem;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
+
+    .search-box {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      outline: none;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+    }
+
+    .tool-card h3 {
+      font-size: 1.2rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .tool-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .btn-link {
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .no-results {
+      display: none;
+      text-align: center;
+      color: var(--muted);
+      margin-top: 40px;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Cabeçalho -->
-    <header class="site-header">
-        <div class="container">
-            <h1>Calculation-Tools</h1>
-            <p>Sua central rápida e gratuita de calculadoras online</p>
-            
-            <!-- Barra de Pesquisa Funcional -->
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Pesquisar calculadora (ex: IMC, porcentagem, juros)..." onkeyup="filterTools()">
-            </div>
-        </div>
-    </header>
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">Calculation Tools</a>
+      <nav><a href="index.html">Home</a></nav>
+    </div>
+  </header>
 
-    <!-- Conteúdo Principal / Grid de Calculadoras -->
-    <main class="container">
-        <section class="tools-grid" id="toolsGrid">
+  <main class="container">
+    <section class="hero">
+      <h1>Ferramentas de Cálculo Online</h1>
+      <p>Calcule porcentagens, saúde, finanças e equações de forma rápida e gratuita.</p>
+      
+      <div class="search-box">
+        <input type="text" id="search-input" class="search-input" placeholder="Buscar calculadora..." onkeyup="filterTools()">
+      </div>
+    </section>
 
-            <!-- Card: Porcentagem -->
-            <a href="porcentagem.html" class="tool-card" data-keywords="porcentagem matematica 10% desconto aumento">
-                <div class="card-icon"><i class="fas fa-percent"></i></div>
-                <div class="card-content">
-                    <h3>Calculadora de Porcentagem</h3>
-                    <p>Calcule acréscimos, descontos e variações percentuais de forma rápida.</p>
-                </div>
-            </a>
+    <section id="tools-grid" class="tools-grid">
+      <!-- Referência: Porcentagem -->
+      <a href="calculators/percentage-calculator/index.html" class="tool-card">
+        <h3>Calculadora de Porcentagem</h3>
+        <p>Calcule aumentos, descontos e variações percentuais em segundos.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- Card: IMC -->
-            <a href="imc.html" class="tool-card" data-keywords="imc saude peso altura indice massa corporal">
-                <div class="card-icon"><i class="fas fa-weight"></i></div>
-                <div class="card-content">
-                    <h3>Calculadora de IMC</h3>
-                    <p>Descubra seu Índice de Massa Corporal e veja em qual faixa você está.</p>
-                </div>
-            </a>
+      <!-- Referência: IMC -->
+      <a href="calculators/imc-calculator/index.html" class="tool-card">
+        <h3>Calculadora de IMC</h3>
+        <p>Descubra seu Índice de Massa Corporal e sua faixa de peso ideal.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- Card: Juros Compostos -->
-            <a href="juros-compostos.html" class="tool-card" data-keywords="juros compostos financas investimentos dinheiro rendimento">
-                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
-                <div class="card-content">
-                    <h3>Juros Compostos</h3>
-                    <p>Simule o crescimento do seu patrimônio ao longo do tempo com aportes.</p>
-                </div>
-            </a>
+      <!-- Referência: Regra de Três -->
+      <a href="calculators/rule-of-three/index.html" class="tool-card">
+        <h3>Regra de Três</h3>
+        <p>Resolva proporções simples e encontre o valor de X rapidamente.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- Card: Equações Matemáticas -->
-            <a href="equacoes.html" class="tool-card" data-keywords="equacoes matematica algebra bhaskara segundo grau">
-                <div class="card-icon"><i class="fas fa-square-root-variable"></i></div>
-                <div class="card-content">
-                    <h3>Equações Matemáticas</h3>
-                    <p>Resolva equações de forma prática com o passo a passo dos cálculos.</p>
-                </div>
-            </a>
+      <!-- Referência: Juros Compostos -->
+      <a href="calculators/compound-interest/index.html" class="tool-card">
+        <h3>Juros Compostos</h3>
+        <p>Simule a evolução dos seus investimentos com juros compostos.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- ========================================== -->
-            <!-- NOVAS CALCULADORAS ADICIONADAS ABAIXO       -->
-            <!-- ========================================== -->
+      <!-- Referência: Equação do 1º Grau -->
+      <a href="calculators/degree-one/index.html" class="tool-card">
+        <h3>Equação do 1º Grau</h3>
+        <p>Encontre o valor de X em equações do tipo ax + b = 0 com o passo a passo.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- Card: Nova Calculadora 1 (Exemplo) -->
-            <a href="sua-nova-calculadora-1.html" class="tool-card" data-keywords="palavra chave 1 nova calculadora">
-                <div class="card-icon"><i class="fas fa-calculator"></i></div>
-                <div class="card-content">
-                    <h3>Nova Ferramenta 1</h3>
-                    <p>Descrição objetiva da nova calculadora adicionada ao hub.</p>
-                </div>
-            </a>
+      <!-- Referência: Equação do 2º Grau -->
+      <a href="calculators/degree-two/index.html" class="tool-card">
+        <h3>Equação do 2º Grau</h3>
+        <p>Resolva equações quadráticas (ax² + bx + c = 0) utilizando a fórmula de Bhaskara.</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
 
-            <!-- Card: Nova Calculadora 2 (Exemplo) -->
-            <a href="sua-nova-calculadora-2.html" class="tool-card" data-keywords="palavra chave 2 outra calculadora">
-                <div class="card-icon"><i class="fas fa-tools"></i></div>
-                <div class="card-content">
-                    <h3>Nova Ferramenta 2</h3>
-                    <p>Descrição objetiva da segunda calculadora integrada ao projeto.</p>
-                </div>
-            </a>
+      <!-- Referência: Equação do 3º Grau -->
+      <a href="calculators/degree-three/index.html" class="tool-card">
+        <h3>Equação do 3º Grau</h3>
+        <p>Calcule as raízes reais e complexas de equações cúbicas (ax³ + bx² + cx + d = 0).</p>
+        <span class="btn-link">Acessar ferramenta &rarr;</span>
+      </a>
+    </section>
 
-        </section>
+    <div id="no-results" class="no-results">Nenhuma calculadora encontrada.</div>
+  </main>
 
-        <!-- Mensagem de "Nenhum resultado encontrado" (Oculta por padrão) -->
-        <div id="noResults" class="no-results" style="display: none;">
-            <p>Nenhuma ferramenta encontrada para a sua busca.</p>
-        </div>
-    </main>
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Calculation Tools. Todos os direitos reservados.</p>
+    </div>
+  </footer>
 
-    <!-- Rodapé -->
-    <footer class="site-footer">
-        <div class="container">
-            <p>&copy; 2026 Calculation-Tools. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+  <script>
+    function filterTools() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const cards = document.querySelectorAll('.tool-card');
+      let found = false;
 
-    <!-- Script Simples para a Barra de Pesquisa -->
-    <script>
-        function filterTools() {
-            const input = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.tool-card');
-            const noResults = document.getElementById('noResults');
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const title = card.querySelector('h3').textContent.toLowerCase();
-                const description = card.querySelector('p').textContent.toLowerCase();
-                const keywords = card.getAttribute('data-keywords') || '';
-                
-                if (title.includes(input) || description.includes(input) || keywords.includes(input)) {
-                    card.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if (visibleCount === 0) {
-                noResults.style.display = 'block';
-            } else {
-                noResults.style.display = 'none';
-            }
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'flex';
+          found = true;
+        } else {
+          card.style.display = 'none';
         }
-    </script>
+      });
+
+      document.getElementById('no-results').style.display = found ? 'none' : 'block';
+    }
+  </script>
+
 </body>
 </html>
