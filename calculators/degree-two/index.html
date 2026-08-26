@@ -50,9 +50,9 @@
       <p class="desc">Resolve equações do tipo <strong>ax² + bx + c = 0</strong></p>
 
       <div class="inputs">
-        <div class="input-group"><label for="a">a</label><input type="number" id="a" value="1" step="any"></div>
-        <div class="input-group"><label for="b">b</label><input type="number" id="b" value="-5" step="any"></div>
-        <div class="input-group"><label for="c">c</label><input type="number" id="c" value="6" step="any"></div>
+        <div class="input-group"><label for="a">a</label><input type="number" id="a" placeholder="Ex: 1" step="any"></div>
+        <div class="input-group"><label for="b">b</label><input type="number" id="b" placeholder="Ex: -5" step="any"></div>
+        <div class="input-group"><label for="c">c</label><input type="number" id="c" placeholder="Ex: 6" step="any"></div>
       </div>
 
       <button onclick="calculate()">Calcular e Gerar Gráfico</button>
@@ -69,13 +69,27 @@
     let chartInstance = null;
 
     function calculate() {
-      const a = parseFloat(document.getElementById('a').value);
-      const b = parseFloat(document.getElementById('b').value);
-      const c = parseFloat(document.getElementById('c').value);
+      const aVal = document.getElementById('a').value;
+      const bVal = document.getElementById('b').value;
+      const cVal = document.getElementById('c').value;
       const resultDiv = document.getElementById('result');
       const chartWrapper = document.getElementById('chart-wrapper');
 
-      if (isNaN(a) || isNaN(b) || isNaN(c) || a === 0) return;
+      if (aVal === '' || bVal === '' || cVal === '') {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const a = parseFloat(aVal);
+      const b = parseFloat(bVal);
+      const c = parseFloat(cVal);
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) return;
+
+      if (a === 0) {
+        alert('O coeficiente "a" deve ser diferente de zero em uma equação do 2º grau.');
+        return;
+      }
 
       const delta = (b * b) - (4 * a * c);
       let roots = [];
@@ -158,7 +172,6 @@
         }
       });
     }
-    calculate();
   </script>
 </body>
 </html>
