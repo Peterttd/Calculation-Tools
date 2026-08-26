@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Salário Líquido | Calculation Tools</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    main { flex: 1; padding: 32px 0; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    h1 { margin-bottom: 8px; font-size: 1.8rem; }
+    .desc { color: var(--muted); margin-bottom: 24px; }
+    .inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .input-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+    input { padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; background: #fff; color: var(--text); }
+    input:focus { border-color: var(--primary); }
+    button { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+    button:hover { background: #1d4ed8; }
+    .result-box { margin-top: 24px; padding: 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; display: none; }
+    .result-box p { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a href="../../index.html" class="logo">&larr; Calculation Tools</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <h1>Calculadora de Salário Líquido</h1>
+      <p class="desc">Estime o salário líquido descontando INSS aproximado, IRRF e outros abatimentos.</p>
+
+      <div class="inputs">
+        <div class="input-group">
+          <label for="gross">Salário Bruto (R$)</label>
+          <input type="number" id="gross" placeholder="Ex: 3500" step="any">
+        </div>
+        <div class="input-group">
+          <label for="benefits">Outros Descontos / Benefícios (R$)</label>
+          <input type="number" id="benefits" placeholder="Ex: 200" step="any">
+        </div>
+      </div>
+
+      <button onclick="calculate()">Calcular Salário Líquido</button>
+
+      <div id="result" class="result-box"></div>
+    </div>
+  </main>
+
+  <script>
+    function calculate() {
+      const grossVal = document.getElementById('gross').value;
+      const benVal = document.getElementById('benefits').value;
+      const resultDiv = document.getElementById('result');
+
+      if (grossVal === '') {
+        alert('Por favor, informe o salário bruto.');
+        return;
+      }
+
+      const gross = parseFloat(grossVal);
+      const otherDiscounts = benVal !== '' ? parseFloat(benVal) : 0;
+
+      if (isNaN(gross) || isNaN(otherDiscounts)) return;
+
+      // Cálculo simplificado orientativo de INSS (teto aproximado) e IRRF para simulação rápida
+      let inss = 0;
+      if (gross <= 1412.00) {
+        inss = gross * 0.075;
+      } else if (gross <= 2666.68) {
+        inss = gross * 0.09;
+      } else if (gross <= 4000.03) {
+        inss = gross * 0.12;
+      } else if (gross <= 7786.02) {
+        inss = gross * 0.14;
+      } else {
+        inss = 908.85; // teto aproximado
+      }
+
+      let baseIr = gross - inss;
+      let irrf = 0;
+      if (baseIr > 2259.20 && baseIr <= 2826.65) {
+        irrf = (baseIr * 0.075) - 169.44;
+      } else if (baseIr <= 3751.05) {
+        irrf = (baseIr * 0.15) - 381.44;
+      } else if (baseIr <= 4664.68) {
+        irrf = (baseIr * 0.225) - 662.77;
+      } else if (baseIr > 4664.68) {
+        irrf = (baseIr * 0.275) - 896.00;
+      }
+      if (irrf < 0) irrf = 0;
+
+      const net = gross - inss - irrf - otherDiscounts;
+
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+        <h3>Resultado Estimado:</h3>
+        <p><strong>Salário Bruto:</strong> R$ ${gross.toFixed(2)}</p>
+        <p><strong>Desconto INSS (Aprox.):</strong> R$ ${inss.toFixed(2)}</p>
+        <p><strong>Desconto IRRF (Aprox.):</strong> R$ ${irrf.toFixed(2)}</p>
+        <p><strong>Outros Descontos:</strong> R$ ${otherDiscounts.toFixed(2)}</p>
+        <p><strong>Salário Líquido:</strong> R$ ${net.toFixed(2)}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
