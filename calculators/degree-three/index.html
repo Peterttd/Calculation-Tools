@@ -7,66 +7,58 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
-      --primary: #2563eb;
-      --bg: #f8fafc;
-      --card-bg: #ffffff;
-      --text: #0f172a;
-      --muted: #64748b;
-      --border: #e2e8f0;
-      --radius: 12px;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --radius: 16px;
+      --accent: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
-    .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 20px; }
-    header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 0; }
-    .logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .container { width: 100%; max-width: 850px; margin: 0 auto; padding: 0 20px; }
+    header { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 18px 0; position: sticky; top: 0; z-index: 10; }
+    .logo { font-size: 1.1rem; font-weight: 600; color: var(--primary); text-decoration: none; }
     main { flex: 1; padding: 40px 0; }
-    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-    h1 { margin-bottom: 8px; font-size: 1.8rem; }
-    .desc { color: var(--muted); margin-bottom: 24px; }
-    .inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 12px; margin-bottom: 24px; }
-    .input-group { display: flex; flex-direction: column; gap: 6px; }
-    label { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
-    input { padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; outline: none; }
-    input:focus { border-color: var(--primary); }
-    button { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
-    button:hover { background: #1d4ed8; }
-    .result-box { margin-top: 24px; padding: 16px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; display: none; }
-    .chart-container { margin-top: 24px; position: relative; height: 350px; display: none; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3); }
+    h1 { font-size: 2rem; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .desc { color: var(--muted); margin-bottom: 28px; font-size: 1rem; }
+    .inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 14px; margin-bottom: 28px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    label { font-size: 0.875rem; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+    input { background: #0f172a; border: 1px solid var(--border); color: var(--text); padding: 12px 16px; border-radius: 10px; font-size: 1.1rem; outline: none; }
+    input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+    button { background: var(--primary); color: white; border: none; padding: 14px 28px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; transition: background 0.2s; }
+    button:hover { background: var(--primary-hover); }
+    .result-box { margin-top: 28px; padding: 20px; background: #0f172a; border: 1px solid var(--border); border-radius: 12px; display: none; }
+    .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin-top: 8px; }
+    .result-item { background: var(--card-bg); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); }
+    .result-item label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 4px; }
+    .result-item span { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+    .chart-container { margin-top: 28px; position: relative; height: 420px; background: #0f172a; border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: none; }
   </style>
 </head>
 <body>
   <header>
-    <div class="container">
-      <a href="../../index.html" class="logo">&larr; Calculation Tools</a>
-    </div>
+    <div class="container"><a href="../../index.html" class="logo">&larr; Voltar às Ferramentas</a></div>
   </header>
 
   <main class="container">
     <div class="card">
       <h1>Equação do 3º Grau</h1>
-      <p class="desc">Resolve equações cúbicas do tipo <strong>ax³ + bx² + cx + d = 0</strong></p>
+      <p class="desc">Plano cartesiano e raízes para <strong>ax³ + bx² + cx + d = 0</strong></p>
 
       <div class="inputs">
-        <div class="input-group">
-          <label for="a">a</label>
-          <input type="number" id="a" value="1" step="any">
-        </div>
-        <div class="input-group">
-          <label for="b">b</label>
-          <input type="number" id="b" value="-6" step="any">
-        </div>
-        <div class="input-group">
-          <label for="c">c</label>
-          <input type="number" id="c" value="11" step="any">
-        </div>
-        <div class="input-group">
-          <label for="d">d</label>
-          <input type="number" id="d" value="-6" step="any">
-        </div>
+        <div class="input-group"><label for="a">a</label><input type="number" id="a" value="1" step="any"></div>
+        <div class="input-group"><label for="b">b</label><input type="number" id="b" value="-6" step="any"></div>
+        <div class="input-group"><label for="c">c</label><input type="number" id="c" value="11" step="any"></div>
+        <div class="input-group"><label for="d">d</label><input type="number" id="d" value="-6" step="any"></div>
       </div>
 
-      <button onclick="calculate()">Calcular e Gerar Gráfico</button>
+      <button onclick="calculate()">Calcular & Gerar Gráfico</button>
 
       <div id="result" class="result-box"></div>
 
@@ -81,16 +73,10 @@
 
     function solveCubic(a, b, c, d) {
       if (a === 0) return [];
-      
-      // Normalização
-      const A = b / a;
-      const B = c / a;
-      const C = d / a;
-
+      const A = b / a, B = c / a, C = d / a;
       const Q = (3 * B - Math.pow(A, 2)) / 9;
       const R = (9 * A * B - 27 * C - 2 * Math.pow(A, 3)) / 54;
       const D = Math.pow(Q, 3) + Math.pow(R, 2);
-
       let roots = [];
 
       if (D > 0) {
@@ -107,8 +93,7 @@
         roots.push(2 * Math.sqrt(-Q) * Math.cos((theta + 2 * Math.PI) / 3) - A / 3);
         roots.push(2 * Math.sqrt(-Q) * Math.cos((theta + 4 * Math.PI) / 3) - A / 3);
       }
-
-      return roots;
+      return roots.sort((x, y) => x - y);
     }
 
     function calculate() {
@@ -120,56 +105,37 @@
       const resultDiv = document.getElementById('result');
       const chartWrapper = document.getElementById('chart-wrapper');
 
-      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)) {
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = '<p style="color:red">Preencha todos os campos.</p>';
-        return;
-      }
+      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || a === 0) return;
 
-      if (a === 0) {
-        resultDiv.style.display = 'block';
-        resultDiv.innerHTML = '<p style="color:red">O coeficiente "a" não pode ser zero.</p>';
-        chartWrapper.style.display = 'none';
-        return;
-      }
-
-      const realRoots = solveCubic(a, b, c, d);
-      
-      let html = '<h3>Raízes Reais Encontradas:</h3>';
-      realRoots.forEach((r, idx) => {
-        html += `<p><strong>x<sub>${idx+1}</sub>:</strong> ${r.toFixed(4)}</p>`;
+      const roots = solveCubic(a, b, c, d);
+      let html = `<h3 style="color:var(--muted); margin-bottom:8px;">Raízes Reais Encontradas</h3><div class="result-grid">`;
+      roots.forEach((r, idx) => {
+        html += `<div class="result-item"><label>x<sub>${idx+1}</sub></label><span>${Number(r.toFixed(4))}</span></div>`;
       });
+      html += '</div>';
 
       resultDiv.style.display = 'block';
       resultDiv.innerHTML = html;
 
       chartWrapper.style.display = 'block';
-      renderChart(a, b, c, d, realRoots);
+      renderChart(a, b, c, d, roots);
     }
 
     function renderChart(a, b, c, d, roots) {
       const ctx = document.getElementById('equationChart').getContext('2d');
-      
-      let xMin = -5, xMax = 5;
-      if (roots.length > 0) {
-        const minR = Math.min(...roots);
-        const maxR = Math.max(...roots);
-        const span = Math.max(maxR - minR, 4);
-        xMin = minR - span * 0.5;
-        xMax = maxR + span * 0.5;
-      }
+      let minR = roots.length ? Math.min(...roots) : -3;
+      let maxR = roots.length ? Math.max(...roots) : 3;
+      const span = Math.max(maxR - minR, 4);
+      const xMin = minR - span * 0.6;
+      const xMax = maxR + span * 0.6;
 
       const dataPoints = [];
       const steps = 150;
-      const stepSize = (xMax - xMin) / steps;
-
       for (let i = 0; i <= steps; i++) {
-        const x = xMin + (i * stepSize);
+        const x = xMin + (i * (xMax - xMin) / steps);
         const y = (a * Math.pow(x, 3)) + (b * Math.pow(x, 2)) + (c * x) + d;
         dataPoints.push({ x: x, y: y });
       }
-
-      const rootPoints = roots.map(r => ({ x: r, y: 0 }));
 
       if (chartInstance) chartInstance.destroy();
 
@@ -180,18 +146,18 @@
             {
               label: 'f(x) Cúbica',
               data: dataPoints,
-              borderColor: '#2563eb',
-              borderWidth: 2,
-              fill: false,
-              pointRadius: 0
+              borderColor: '#3b82f6',
+              borderWidth: 3,
+              pointRadius: 0,
+              tension: 0.3
             },
             {
               label: 'Raízes Reais',
-              data: rootPoints,
+              data: roots.map(r => ({ x: r, y: 0 })),
               backgroundColor: '#ef4444',
-              borderColor: '#ef4444',
-              pointRadius: 6,
-              pointHoverRadius: 8,
+              borderColor: '#ffffff',
+              borderWidth: 2,
+              pointRadius: 7,
               showLine: false
             }
           ]
@@ -199,13 +165,23 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#94a3b8' } } },
           scales: {
-            x: { type: 'linear', position: 'bottom', title: { display: true, text: 'X' } },
-            y: { title: { display: true, text: 'Y' } }
+            x: {
+              type: 'linear', position: 'center',
+              grid: { color: (ctx) => ctx.tick.value === 0 ? '#64748b' : '#334155', lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1 },
+              ticks: { color: '#94a3b8' }
+            },
+            y: {
+              type: 'linear', position: 'center',
+              grid: { color: (ctx) => ctx.tick.value === 0 ? '#64748b' : '#334155', lineWidth: (ctx) => ctx.tick.value === 0 ? 2 : 1 },
+              ticks: { color: '#94a3b8' }
+            }
           }
         }
       });
     }
+    calculate();
   </script>
 </body>
 </html>
