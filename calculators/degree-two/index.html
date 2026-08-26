@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equação do 2º Grau | Calculation Tools</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #64748b;
+      --secondary-hover: #475569;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    nav a { color: var(--text); text-decoration: none; font-weight: 500; }
+    main.container { flex: 1; padding-top: 32px; padding-bottom: 40px; }
+    .breadcrumb { font-size: 0.875rem; color: var(--muted); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--primary); text-decoration: none; }
+    h1 { font-size: 2rem; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); margin-bottom: 24px; }
+    .calc-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    .eq-format { text-align: center; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; color: var(--primary); }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.95rem; }
+    .form-control { width: 100%; padding: 12px 16px; font-size: 1rem; border: 1px solid var(--border); border-radius: 8px; outline: none; }
+    .form-control:focus { border-color: var(--primary); }
+    .btn-group { display: flex; gap: 12px; margin-top: 8px; }
+    .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; background-color: var(--primary); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn:hover { background-color: var(--primary-hover); }
+    .btn-secondary { background-color: var(--secondary); }
+    .btn-secondary:hover { background-color: var(--secondary-hover); }
+    .result-box { display: none; margin-top: 24px; padding: 20px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; }
+    .result-box.active { display: block; }
+    .result-title { font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+    .step { font-family: monospace; font-size: 0.95rem; margin-top: 4px; }
+    .error-msg { display: none; margin-top: 16px; padding: 12px; background-color: #fef2f2; border: 1px solid #fecaca; color: var(--error); border-radius: 8px; text-align: center; }
+    footer { background: var(--card-bg); border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--muted); font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="../../index.html" class="logo">Calculation Tools</a>
+      <nav><a href="../../index.html">Home</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="breadcrumb"><a href="../../index.html">Home</a> &rsaquo; Equação do 2º Grau</nav>
+    <h1>Calculadora de Equação do 2º Grau</h1>
+    <p class="subtitle">Resolva equações quadráticas na forma <strong>ax² + bx + c = 0</strong> usando Bhaskara.</p>
+
+    <div class="calc-card">
+      <div class="eq-format">ax² + bx + c = 0</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="a">Coeficiente a</label>
+          <input type="number" id="a" class="form-control" placeholder="Ex: 1" step="any">
+        </div>
+        <div class="form-group">
+          <label for="b">Coeficiente b</label>
+          <input type="number" id="b" class="form-control" placeholder="Ex: -5" step="any">
+        </div>
+        <div class="form-group">
+          <label for="c">Coeficiente c</label>
+          <input type="number" id="c" class="form-control" placeholder="Ex: 6" step="any">
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="calculate()">Calcular</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpar</button>
+      </div>
+
+      <div id="error-msg" class="error-msg"></div>
+
+      <div id="result-box" class="result-box">
+        <div class="result-title">Resolução por Bhaskara:</div>
+        <div id="step-delta" class="step"></div>
+        <div id="step-roots" class="step" style="font-size: 1.1rem; font-weight: bold; margin-top: 12px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container"><p>&copy; 2026 Calculation Tools. Todos os direitos reservados.</p></div>
+  </footer>
+
+  <script>
+    function calculate() {
+      const a = parseFloat(document.getElementById('a').value);
+      const b = parseFloat(document.getElementById('b').value);
+      const c = parseFloat(document.getElementById('c').value);
+      const errorMsg = document.getElementById('error-msg');
+      const resultBox = document.getElementById('result-box');
+
+      if (isNaN(a) || isNaN(b) || isNaN(c)) {
+        errorMsg.innerText = "Por favor, preencha todos os três coeficientes.";
+        errorMsg.style.display = 'block';
+        resultBox.classList.remove('active');
+        return;
+      }
+
+      if (a === 0) {
+        errorMsg.innerText = "O coeficiente 'a' não pode ser 0 para uma equação do 2º grau.";
+        errorMsg.style.display = 'block';
+        resultBox.classList.remove('active');
+        return;
+      }
+
+      errorMsg.style.display = 'none';
+
+      const delta = (b * b) - (4 * a * c);
+      document.getElementById('step-delta').innerText = `Δ = b² - 4ac = (${b})² - 4(${a})(${c}) = ${delta}`;
+
+      const stepRoots = document.getElementById('step-roots');
+
+      if (delta > 0) {
+        const x1 = (-b + Math.sqrt(delta)) / (2 * a);
+        const x2 = (-b - Math.sqrt(delta)) / (2 * a);
+        stepRoots.innerHTML = `x' = ${x1}<br>x'' = ${x2}`;
+      } else if (delta === 0) {
+        const x = -b / (2 * a);
+        stepRoots.innerHTML = `x' = x'' = ${x} (Raiz única)`;
+      } else {
+        const realPart = (-b / (2 * a)).toFixed(2);
+        const imagPart = (Math.sqrt(-delta) / (2 * a)).toFixed(2);
+        stepRoots.innerHTML = `Raízes Complexas:<br>x' = ${realPart} + ${imagPart}i<br>x'' = ${realPart} - ${imagPart}i`;
+      }
+
+      resultBox.classList.add('active');
+    }
+
+    function clearFields() {
+      document.getElementById('a').value = '';
+      document.getElementById('b').value = '';
+      document.getElementById('c').value = '';
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('result-box').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
