@@ -4,7 +4,7 @@ Um conjunto de ferramentas e utilitários para cálculos e operações matemáti
 
 ## Descrição
 
-Este repositório agrupa scripts, bibliotecas e exemplos para executar cálculos, conversões, estatísticas e outras operações numéricas de forma simples e reutilizável. Pode incluir ferramentas em diferentes linguagens, exemplos de uso e testes.
+Este repositório agrupa scripts,  bibliotecas e exemplos para executar cálculos, conversões, estatísticas e outras operações numéricas de forma simples e reutilizável. Pode incluir ferramentas em diferentes linguagens, exemplos de uso e testes.
 
 ## Funcionalidades
 
