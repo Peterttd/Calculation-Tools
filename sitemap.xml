@@ -1,15 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
-    <loc>https://seusite.com/</loc>
-    <priority>1.0</priority>
+    <loc>https://calculation-tools-e3s.pages.dev/</loc>
   </url>
+
   <url>
-    <loc>https://seusite.com/calculators/percentage-calculator/</loc>
-    <priority>0.8</priority>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/age/</loc>
   </url>
+
   <url>
-    <loc>https://seusite.com/calculators/bmi-calculator/</loc>
-    <priority>0.8</priority>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/average/</loc>
   </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/compound-interest/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/date-diff/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/degree-one/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/degree-three/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/degree-two/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/discount/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/financing/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/imc-calculator/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/net-salary/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/percentage-calculator/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/resignation/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/rule-of-three/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/simple-interest/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/thirteenth-salary/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/vacation/</loc>
+  </url>
+
+  <url>
+    <loc>https://calculation-tools-e3s.pages.dev/Calculators/weighted-average/</loc>
+  </url>
+
 </urlset>
