@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Regra de Três | Calculation Tools</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #64748b;
+      --secondary-hover: #475569;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+    .container { width: 100%; max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    header { background: var(--card-bg); border-bottom: 1px solid var(--border); padding: 16px 0; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 1.25rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    nav a { color: var(--text); text-decoration: none; font-weight: 500; }
+    main.container { flex: 1; padding-top: 32px; padding-bottom: 40px; }
+    .breadcrumb { font-size: 0.875rem; color: var(--muted); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--primary); text-decoration: none; }
+    h1 { font-size: 2rem; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); margin-bottom: 24px; }
+    .calc-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+    
+    .rule-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; text-align: center; align-items: center; }
+    .form-control { width: 100%; padding: 12px; font-size: 1rem; border: 1px solid var(--border); border-radius: 8px; outline: none; text-align: center; }
+    .form-control:focus { border-color: var(--primary); }
+    .x-field { background-color: #f1f5f9; font-weight: bold; color: var(--primary); }
+    
+    .btn-group { display: flex; gap: 12px; margin-top: 24px; }
+    .btn { flex: 1; padding: 12px; border: none; border-radius: 8px; background-color: var(--primary); color: white; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .btn:hover { background-color: var(--primary-hover); }
+    .btn-secondary { background-color: var(--secondary); }
+    .btn-secondary:hover { background-color: var(--secondary-hover); }
+    .result-box { display: none; margin-top: 24px; padding: 20px; background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; text-align: center; }
+    .result-box.active { display: block; }
+    .result-val { font-size: 2.25rem; font-weight: 800; color: var(--primary); }
+    .error-msg { display: none; margin-top: 16px; padding: 12px; background-color: #fef2f2; border: 1px solid #fecaca; color: var(--error); border-radius: 8px; font-size: 0.9rem; text-align: center; }
+    footer { background: var(--card-bg); border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--muted); font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container header-inner">
+      <a href="../../index.html" class="logo">Calculation Tools</a>
+      <nav><a href="../../index.html">Home</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="breadcrumb"><a href="../../index.html">Home</a> &rsaquo; Regra de Três</nav>
+    <h1>Calculadora de Regra de Três</h1>
+    <p class="subtitle">Descubra o valor de X de forma simples e direta.</p>
+
+    <div class="calc-card">
+      <div class="rule-grid">
+        <div>
+          <label style="display:block; margin-bottom:4px; font-weight:600;">Se este valor:</label>
+          <input type="number" id="valA" class="form-control" placeholder="A" step="any">
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:4px; font-weight:600;">equivale a este:</label>
+          <input type="number" id="valB" class="form-control" placeholder="B" step="any">
+        </div>
+      </div>
+      <div class="rule-grid">
+        <div>
+          <label style="display:block; margin-bottom:4px; font-weight:600;">Então este valor:</label>
+          <input type="number" id="valC" class="form-control" placeholder="C" step="any">
+        </div>
+        <div>
+          <label style="display:block; margin-bottom:4px; font-weight:600;">equivale a X:</label>
+          <input type="text" id="valX" class="form-control x-field" value="X" readonly>
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="calculateRule()">Calcular X</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpar</button>
+      </div>
+
+      <div id="error-msg" class="error-msg">Preencha os valores A, B e C corretamente. A não pode ser zero.</div>
+
+      <div id="result-box" class="result-box">
+        <div class="result-label">O valor de X é:</div>
+        <div id="result-val" class="result-val">0</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container"><p>&copy; 2026 Calculation Tools. Todos os direitos reservados.</p></div>
+  </footer>
+
+  <script>
+    function calculateRule() {
+      const a = parseFloat(document.getElementById('valA').value);
+      const b = parseFloat(document.getElementById('valB').value);
+      const c = parseFloat(document.getElementById('valC').value);
+      const errorMsg = document.getElementById('error-msg');
+      const resultBox = document.getElementById('result-box');
+
+      if (isNaN(a) || isNaN(b) || isNaN(c) || a === 0) {
+        errorMsg.style.display = 'block';
+        resultBox.classList.remove('active');
+        return;
+      }
+
+      errorMsg.style.display = 'none';
+      const x = (b * c) / a;
+
+      document.getElementById('result-val').innerText = x.toLocaleString('pt-BR', { maximumFractionDigits: 4 });
+      resultBox.classList.add('active');
+    }
+
+    function clearFields() {
+      document.getElementById('valA').value = '';
+      document.getElementById('valB').value = '';
+      document.getElementById('valC').value = '';
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('result-box').classList.remove('active');
+    }
+  </script>
+</body>
+</html>
