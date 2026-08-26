@@ -52,11 +52,11 @@
       <div class="inputs">
         <div class="input-group">
           <label for="a">Coeficiente a</label>
-          <input type="number" id="a" value="2" step="any">
+          <input type="number" id="a" placeholder="Ex: 2" step="any">
         </div>
         <div class="input-group">
           <label for="b">Coeficiente b</label>
-          <input type="number" id="b" value="-4" step="any">
+          <input type="number" id="b" placeholder="Ex: -4" step="any">
         </div>
       </div>
 
@@ -74,10 +74,18 @@
     let chartInstance = null;
 
     function calculate() {
-      const a = parseFloat(document.getElementById('a').value);
-      const b = parseFloat(document.getElementById('b').value);
+      const aVal = document.getElementById('a').value;
+      const bVal = document.getElementById('b').value;
       const resultDiv = document.getElementById('result');
       const chartWrapper = document.getElementById('chart-wrapper');
+
+      if (aVal === '' || bVal === '') {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const a = parseFloat(aVal);
+      const b = parseFloat(bVal);
 
       if (isNaN(a) || isNaN(b)) return;
 
@@ -156,7 +164,6 @@
         }
       });
     }
-    calculate();
   </script>
 </body>
 </html>
