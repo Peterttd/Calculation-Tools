@@ -50,10 +50,10 @@
       <p class="desc">Resolve equações cúbicas do tipo <strong>ax³ + bx² + cx + d = 0</strong></p>
 
       <div class="inputs">
-        <div class="input-group"><label for="a">a</label><input type="number" id="a" value="1" step="any"></div>
-        <div class="input-group"><label for="b">b</label><input type="number" id="b" value="-6" step="any"></div>
-        <div class="input-group"><label for="c">c</label><input type="number" id="c" value="11" step="any"></div>
-        <div class="input-group"><label for="d">d</label><input type="number" id="d" value="-6" step="any"></div>
+        <div class="input-group"><label for="a">a</label><input type="number" id="a" placeholder="Ex: 1" step="any"></div>
+        <div class="input-group"><label for="b">b</label><input type="number" id="b" placeholder="Ex: -6" step="any"></div>
+        <div class="input-group"><label for="c">c</label><input type="number" id="c" placeholder="Ex: 11" step="any"></div>
+        <div class="input-group"><label for="d">d</label><input type="number" id="d" placeholder="Ex: -6" step="any"></div>
       </div>
 
       <button onclick="calculate()">Calcular e Gerar Gráfico</button>
@@ -95,15 +95,30 @@
     }
 
     function calculate() {
-      const a = parseFloat(document.getElementById('a').value);
-      const b = parseFloat(document.getElementById('b').value);
-      const c = parseFloat(document.getElementById('c').value);
-      const d = parseFloat(document.getElementById('d').value);
+      const aVal = document.getElementById('a').value;
+      const bVal = document.getElementById('b').value;
+      const cVal = document.getElementById('c').value;
+      const dVal = document.getElementById('d').value;
 
       const resultDiv = document.getElementById('result');
       const chartWrapper = document.getElementById('chart-wrapper');
 
-      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d) || a === 0) return;
+      if (aVal === '' || bVal === '' || cVal === '' || dVal === '') {
+        alert('Por favor, preencha todos os campos.');
+        return;
+      }
+
+      const a = parseFloat(aVal);
+      const b = parseFloat(bVal);
+      const c = parseFloat(cVal);
+      const d = parseFloat(dVal);
+
+      if (isNaN(a) || isNaN(b) || isNaN(c) || isNaN(d)) return;
+
+      if (a === 0) {
+        alert('O coeficiente "a" deve ser diferente de zero em uma equação do 3º grau.');
+        return;
+      }
 
       const roots = solveCubic(a, b, c, d);
       let html = '<h3>Raízes Reais Encontradas:</h3>';
@@ -177,7 +192,6 @@
         }
       });
     }
-    calculate();
   </script>
 </body>
 </html>
