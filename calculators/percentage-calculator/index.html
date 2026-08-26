@@ -1,116 +1,318 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Percentage Calculator - Calculation-Tools</title>
-  <meta name="description" content="Free percentage calculator to quickly compute percentage values online. Step-by-step formula and examples included.">
-  <link rel="canonical" href="https://seusite.com/calculators/percentage-calculator/">
-  <link rel="stylesheet" href="../../css/main.css">
+  <title>Calculadora de Porcentagem | Calculation Tools</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --secondary: #64748b;
+      --secondary-hover: #475569;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --error: #ef4444;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    main.container {
+      flex: 1;
+      padding-top: 32px;
+      padding-bottom: 40px;
+    }
+
+    .breadcrumb {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .breadcrumb a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .calc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-hover);
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 24px;
+      padding: 20px;
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .result-box.active {
+      display: block;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .result-val {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .error-msg {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--error);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .seo-content {
+      margin-top: 40px;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .seo-content h2 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+    }
+
+    .seo-content p {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    footer {
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      padding: 24px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 600px) {
+      .btn-group {
+        flex-direction: column;
+      }
+      .calc-card {
+        padding: 16px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <div class="container header-inner">
-      <a href="../../index.html" class="logo">Calculation-Tools</a>
-      <nav>
-        <a href="../../index.html">Home</a>
-        <a href="../../about/index.html">About</a>
-      </nav>
+      <a href="../../index.html" class="logo">Calculation Tools</a>
+      <nav><a href="../../index.html">Home</a></nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="breadcrumb">
-      <a href="../../index.html">Home</a> &gt; <span>Mathematics</span> &gt; Percentage Calculator
-    </div>
+    <nav class="breadcrumb">
+      <a href="../../index.html">Home</a> &rsaquo; Calculadora de Porcentagem
+    </nav>
 
-    <h1>Percentage Calculator</h1>
-    <p style="color: var(--text-muted);">Calculate the exact percentage value of any given number.</p>
+    <h1>Calculadora de Porcentagem</h1>
+    <p class="subtitle">Descubra quanto é uma porcentagem de determinado valor instantaneamente.</p>
 
-    <div class="ad-slot">Google AdSense - Above Calculator Banner</div>
-
-    <div class="calc-container">
-      <form id="percForm">
-        <div class="form-group">
-          <label for="percentVal">What is (%)</label>
-          <input type="number" id="percentVal" class="form-control" placeholder="e.g. 15" required step="any">
-        </div>
-        <div class="form-group">
-          <label for="totalVal">Of total value</label>
-          <input type="number" id="totalVal" class="form-control" placeholder="e.g. 200" required step="any">
-        </div>
-        <div class="btn-group">
-          <button type="submit" class="btn">Calculate</button>
-          <button type="button" id="resetBtn" class="btn btn-secondary">Reset</button>
-        </div>
-      </form>
-
-      <div id="resultBox" class="result-box">
-        <div>Result:</div>
-        <div id="resultValue" class="result-val">0</div>
+    <div class="calc-card">
+      <div class="form-group">
+        <label for="percentage">Porcentagem (%)</label>
+        <input type="number" id="percentage" class="form-control" placeholder="Ex: 15" step="any">
       </div>
-      <div id="errorMsg" class="error-msg">Please enter valid numeric values.</div>
+
+      <div class="form-group">
+        <label for="value">Do valor (R$)</label>
+        <input type="number" id="value" class="form-control" placeholder="Ex: 200" step="any">
+      </div>
+
+      <div class="btn-group">
+        <button class="btn" onclick="calculate()">Calcular</button>
+        <button class="btn btn-secondary" onclick="clearFields()">Limpar</button>
+      </div>
+
+      <div id="error-msg" class="error-msg">Por favor, preencha ambos os campos com números válidos.</div>
+
+      <div id="result-box" class="result-box">
+        <div class="result-label">Resultado:</div>
+        <div id="result-val" class="result-val">0</div>
+      </div>
     </div>
 
-    <div class="ad-slot">Google AdSense - Native Content Ad</div>
-
-    <article class="seo-content">
-      <h2>What is a Percentage?</h2>
-      <p>A percentage is a relative number that represents the hundredth part of any quantity.</p>
-
-      <h2>How to Calculate Percentage Manually</h2>
-      <p>Multiply the percentage by the total amount and divide by 100.</p>
-      <p><code>Formula: (Percentage * Total Value) / 100</code></p>
-
-      <h2>Frequently Asked Questions</h2>
-      <p><strong>Is this calculator free?</strong><br>Yes, all tools on our website are 100% free.</p>
-    </article>
+    <section class="seo-content">
+      <h2>Como calcular porcentagem?</h2>
+      <p>Para calcular a porcentagem de um valor manualmente, basta multiplicar a porcentagem pelo valor total e dividir o resultado por 100.</p>
+    </section>
   </main>
 
   <footer>
     <div class="container">
-      <div class="footer-links">
-        <a href="../../index.html">Home</a>
-        <a href="../../privacy-policy/index.html">Privacy Policy</a>
-        <a href="../../terms-of-use/index.html">Terms of Use</a>
-      </div>
-      <p>&copy; 2026 Calculation-Tools. All rights reserved.</p>
+      <p>&copy; 2026 Calculation Tools. Todos os direitos reservados.</p>
     </div>
   </footer>
 
-  <script type="module">
-    import { calculatePercentage } from '../../js/calculators.js';
+  <script>
+    function calculate() {
+      const percentage = parseFloat(document.getElementById('percentage').value);
+      const value = parseFloat(document.getElementById('value').value);
+      const errorMsg = document.getElementById('error-msg');
+      const resultBox = document.getElementById('result-box');
+      const resultVal = document.getElementById('result-val');
 
-    const form = document.getElementById('percForm');
-    const resultBox = document.getElementById('resultBox');
-    const resultVal = document.getElementById('resultValue');
-    const errorMsg = document.getElementById('errorMsg');
-    const resetBtn = document.getElementById('resetBtn');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      errorMsg.style.display = 'none';
-
-      const p = parseFloat(document.getElementById('percentVal').value);
-      const t = parseFloat(document.getElementById('totalVal').value);
-
-      const res = calculatePercentage(p, t);
-
-      if (res === null) {
+      if (isNaN(percentage) || isNaN(value)) {
         errorMsg.style.display = 'block';
         resultBox.classList.remove('active');
-      } else {
-        resultVal.textContent = res.toLocaleString('en-US', { maximumFractionDigits: 4 });
-        resultBox.classList.add('active');
+        return;
       }
-    });
 
-    resetBtn.addEventListener('click', () => {
-      form.reset();
-      resultBox.classList.remove('active');
       errorMsg.style.display = 'none';
-    });
+      const result = (percentage / 100) * value;
+      
+      // Formata o número para exibição agradável
+      resultVal.innerText = result.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+      resultBox.classList.add('active');
+    }
+
+    function clearFields() {
+      document.getElementById('percentage').value = '';
+      document.getElementById('value').value = '';
+      document.getElementById('error-msg').style.display = 'none';
+      document.getElementById('result-box').classList.remove('active');
+    }
   </script>
+
 </body>
 </html>
